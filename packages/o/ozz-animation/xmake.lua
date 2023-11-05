@@ -16,7 +16,7 @@ package("ozz-animation")
 
     add_deps("cmake")
 
-    on_install(function (package)
+    on_install("windows|x64", "windows|x86", "linux", "macosx", "bsd", "mingw", "msys", "android", "iphoneos", "cross", "wasm", function (package)
         local configs =
         {
             "-Dozz_build_tools=OFF",
