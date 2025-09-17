@@ -44,6 +44,10 @@ package("luisa-compute")
     add_deps("spdlog", {configs = {header_only = false, fmt_external = true}})
     add_deps("lmdb", "reproc", "xxhash", "yyjson", "magic_enum", "marl")
 
+    on_check(function (package)
+        assert(package:is_arch64(), "package(luisa-compute) only support 64 bit")
+    end)
+
     on_load(function (package)
         if package:config("gui") then
             package:add("deps", "glfw")
@@ -58,7 +62,7 @@ package("luisa-compute")
         end
     end)
 
-    on_install("windows", "macosx", function (package)
+    on_install("windows|x64", "linux", "macosx", function (package)
         if package:has_tool("cxx", "cl") then
             package:add("cxflags", "/Zc:preprocessor", "/Zc:__cplusplus")
         end
